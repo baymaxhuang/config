@@ -38,6 +38,6 @@ using it. Follow the instructions in the documentation.
 
 ```
 cd ~/.vim/bundle/YouCompleteMe
-./install.py
+./install.py --clang-complete
 ```
 
