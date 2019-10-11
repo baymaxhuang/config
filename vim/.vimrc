@@ -16,6 +16,8 @@ elseif filereadable(expand("~/.config/nvim/vimrc.bundles")) " neovim
   source ~/.config/nvim/vimrc.bundles
 endif
 
+let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
+
 "==========================================
 " General Settings 基础设置
 "==========================================
@@ -107,6 +109,8 @@ set shiftround
 " HotKey Settings  自定义快捷键设置
 "==========================================
 map  <F5> :NERDTreeToggle<cr>
+
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Map ; to : and save a million keystrokes 用于快速进入命令行
 nnoremap ; :
