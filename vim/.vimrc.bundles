@@ -1,3 +1,4 @@
+" ################### 插件管理 ###################
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
@@ -11,9 +12,13 @@ Plug 'junegunn/vim-easy-align'
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
-" On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+" nav
+" nerdtree nerdtreetabs
+Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
+" ctrlspace
+Plug 'vim-ctrlspace/vim-ctrlspace'
+" tagbar
+Plug 'majutsushi/tagbar'
 
 " auto complete
 " 代码自动补全
@@ -40,5 +45,191 @@ Plug 'tomasr/molokai'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 
+" git
+" fugitive
+Plug 'tpope/vim-fugitive'
+" gitgutter
+Plug 'airblade/vim-gitgutter'
+
 " Initialize plugin system
 call plug#end()
+
+" ################### 插件配置 ###################
+"
+" ################### 功能相关 ###################
+" git.  git操作还是习惯命令行,vim里面处理简单diff编辑操作
+
+" fugitive {{{
+    " :Gdiff  :Gstatus :Gvsplit
+    nnoremap <leader>ge :Gdiff<CR>
+    " not ready to open
+    " <leader>gb maps to :Gblame<CR>
+    " <leader>gs maps to :Gstatus<CR>
+    " <leader>gd maps to :Gdiff<CR>  和现有冲突
+    " <leader>gl maps to :Glog<CR>
+    " <leader>gc maps to :Gcommit<CR>
+    " <leader>gp maps to :Git push<CR>
+" }}}
+
+" gitgutter {{{
+    " 同git diff,实时展示文件中修改的行
+    " 只是不喜欢除了行号多一列, 默认关闭,gs时打开
+    let g:gitgutter_map_keys = 0
+    let g:gitgutter_enabled = 1
+    let g:gitgutter_highlight_lines = 1
+    nnoremap <leader>gs :GitGutterToggle<CR>
+" }}}
+
+" ################### 快速导航 ###################
+
+" nerdtree nerdtreetabs {{{
+    " map <leader>n :NERDTreeToggle<CR>
+    let NERDTreeHighlightCursorline=1
+    let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+    "close vim if the only window left open is a NERDTree
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+    " s/v 分屏打开文件
+    let g:NERDTreeMapOpenSplit = 's'
+    let g:NERDTreeMapOpenVSplit = 'v'
+    " fix Nerdtree ^G before folder and file names OSX terminal vim
+    let g:NERDTreeNodeDelimiter = "\u00a0"
+
+
+    " nerdtreetabs
+    map <Leader>n <plug>NERDTreeTabsToggle<CR>
+    " 关闭同步
+    " let g:nerdtree_tabs_synchronize_view=0
+    " let g:nerdtree_tabs_synchronize_focus=0
+    " 是否自动开启nerdtree
+    " thank to @ListenerRi, see https://github.com/wklken/k-vim/issues/165
+    let g:nerdtree_tabs_open_on_console_startup=0
+    let g:nerdtree_tabs_open_on_gui_startup=0
+" }}}
+
+
+" Vim Workspace Controller
+" ctrlspace {{{
+    let g:airline_exclude_preview = 1
+    hi CtrlSpaceSelected guifg=#586e75 guibg=#eee8d5 guisp=#839496 gui=reverse,bold ctermfg=10 ctermbg=7 cterm=reverse,bold
+    hi CtrlSpaceNormal   guifg=#839496 guibg=#021B25 guisp=#839496 gui=NONE ctermfg=12 ctermbg=0 cterm=NONE
+    hi CtrlSpaceSearch   guifg=#cb4b16 guibg=NONE gui=bold ctermfg=9 ctermbg=NONE term=bold cterm=bold
+    hi CtrlSpaceStatus   guifg=#839496 guibg=#002b36 gui=reverse term=reverse cterm=reverse ctermfg=12 ctermbg=8
+" }}}
+
+
+" 标签导航
+" tagbar {{{
+    nmap <F9> :TagbarToggle<CR>
+    let g:tagbar_autofocus = 1
+    " let g:tagbar_autoshowtag = 1
+    " let g:tagbar_show_visibility = 1
+    " for ruby
+    let g:tagbar_type_ruby = {
+        \ 'kinds' : [
+            \ 'm:modules',
+            \ 'c:classes',
+            \ 'd:describes',
+            \ 'C:contexts',
+            \ 'f:methods',
+            \ 'F:singleton methods'
+        \ ]
+    \ }
+
+    " go语言的tagbar配置
+    " 1. install gotags 'go get -u github.com/jstemmer/gotags'
+    " 2. make sure `gotags` in you shell PATH, you can call check it with `which gotags`
+    " for gotags. work with tagbar
+    let g:tagbar_type_go = {
+        \ 'ctagstype' : 'go',
+        \ 'kinds'     : [
+            \ 'p:package',
+            \ 'i:imports:1',
+            \ 'c:constants',
+            \ 'v:variables',
+            \ 't:types',
+            \ 'n:interfaces',
+            \ 'w:fields',
+            \ 'e:embedded',
+            \ 'm:methods',
+            \ 'r:constructor',
+            \ 'f:functions'
+        \ ],
+        \ 'sro' : '.',
+        \ 'kind2scope' : {
+            \ 't' : 'ctype',
+            \ 'n' : 'ntype'
+        \ },
+        \ 'scope2kind' : {
+            \ 'ctype' : 't',
+            \ 'ntype' : 'n'
+        \ },
+        \ 'ctagsbin'  : 'gotags',
+        \ 'ctagsargs' : '-sort -silent'
+    \ }
+" }}}
+
+" ################### 自动补全 ###################
+
+" YouCompleteMe {{{
+    "youcompleteme  默认tab  s-tab 和自动补全冲突
+    "let g:ycm_key_list_select_completion=['<c-n>']
+    let g:ycm_key_list_select_completion = ['<Down>']
+    "let g:ycm_key_list_previous_completion=['<c-p>']
+    let g:ycm_key_list_previous_completion = ['<Up>']
+    let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
+    let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
+    let g:ycm_use_ultisnips_completer = 1 "提示UltiSnips
+    let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串中的文字也会被收入补全
+    let g:ycm_collect_identifiers_from_tags_files = 1
+    " 开启语法关键字补全
+    let g:ycm_seed_identifiers_with_syntax=1
+    " 回车作为选中
+    let g:ycm_key_list_stop_completion = ['<CR>']
+
+    "let g:ycm_seed_identifiers_with_syntax=1   "语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
+
+    " 跳转到定义处, 分屏打开
+    let g:ycm_goto_buffer_command = 'horizontal-split'
+    let g:ycm_register_as_syntastic_checker = 0
+    " nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+    nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
+
+    " 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
+    " old version
+    if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
+        let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
+    endif
+    " new version
+    if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
+        let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+    endif
+    " new version
+    if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py"))
+        let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py"
+    endif
+
+    " 直接触发自动补全 insert模式下
+    " let g:ycm_key_invoke_completion = '<C-Space>'
+    " 黑名单,不启用
+    let g:ycm_filetype_blacklist = {
+        \ 'tagbar' : 1,
+        \ 'gitcommit' : 1,
+        \}
+" }}}
+
+" ################### 显示增强-主题 ###################"
+
+" solarized {{{
+    let g:solarized_termtrans=1
+    let g:solarized_contrast="normal"
+    let g:solarized_visibility="normal"
+    " let g:solarized_termcolors=256
+" }}}
+
+" molokai {{{
+    " monokai原始背景色
+    let g:molokai_original = 1
+    let g:rehash256 = 1
+" }}}
+
