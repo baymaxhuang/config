@@ -16,6 +16,7 @@
     ```
     cd vim-8.1.2135
     ./configure --prefix=$HOME/.local -enable-pythoninterp
+    make -j && make install
     ```
     其中，```–enable-pythoninterp```表示打开对python编写的插件的支持，YouCompleteMe插件需要；```--prefix=$HOME/.local```表示安装vim到一个自定义目录，默认装到```/usr/bin/local/```目录中。
     
