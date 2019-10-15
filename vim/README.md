@@ -41,4 +41,18 @@ using it. Follow the instructions in the documentation.
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py --clang-complete
 ```
-
+### 问题二
+使用vim-plug插件安装YouCompleteMe时间较长，如果失败，可以手动安装
+```
+cd ~/.vim/bundle
+git clone https://github.com/ycm-core/YouCompleteMe.git
+cd YouCompleteMe
+git submodule update --init --recursive
+./install.py --go-completer --clang-completer
+```
+### 问题三
+安装YouCompleteMe的go语言插件时，如果用的go版本较低，会出现如下问题，升级到最新的go版本即可
+```
+main.go:15:2: use of internal package not allowed
+main.go:16:2: use of internal package not allowed
+```
