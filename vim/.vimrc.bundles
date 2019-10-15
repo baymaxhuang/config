@@ -61,7 +61,7 @@ call plug#end()
 
 " fugitive {{{
     " :Gdiff  :Gstatus :Gvsplit
-    nnoremap <leader>ge :Gdiff<CR>
+    nnoremap <leader>gf :Gdiff<CR>
     " not ready to open
     " <leader>gb maps to :Gblame<CR>
     " <leader>gs maps to :Gstatus<CR>
@@ -189,9 +189,9 @@ call plug#end()
     "let g:ycm_seed_identifiers_with_syntax=1   "语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
 
     " 跳转到定义处, 分屏打开
-    let g:ycm_goto_buffer_command = 'horizontal-split'
+    " let g:ycm_goto_buffer_command = 'horizontal-split'
     let g:ycm_register_as_syntastic_checker = 0
-    " nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+    nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
     nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
     nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
 
