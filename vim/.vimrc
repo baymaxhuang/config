@@ -66,27 +66,75 @@ filetype plugin indent on
 
 " 文件修改之后自动载入
 set autoread
+" 启动的时候不显示那个援助乌干达儿童的提示
+set shortmess=atI
+
+" 备份,到另一个位置. 防止误删, 目前是取消备份
+"set backup
+"set backupext=.bak
+"set backupdir=/tmp/vimbk/
+
+" 取消备份。 视情况自己改
+set nobackup
+" 关闭交换文件
+set noswapfile
+
+
+" TODO: remove this, use gundo
+" create undo file
+" if has('persistent_undo')
+  " " How many undos
+  " set undolevels=1000
+  " " number of lines to save for undo
+  " set undoreload=10000
+  " " So is persistent undo ...
+  " "set undofile
+  " set noundofile
+  " " set undodir=/tmp/vimundo/
+" endif
+
+set wildignore=*.swp,*.bak,*.pyc,*.class,.svn
 
 " 突出显示当前列
 set cursorcolumn
 " 突出显示当前行
 set cursorline
 
+
 " 设置 退出vim后，内容显示在终端屏幕, 可以用于查看和复制, 不需要可以去掉
 " 好处：误删什么的，如果以前屏幕打开，可以找回
 " set t_ti= t_te=
 
-" Configure backspace so it acts as it should act
-set backspace=eol,start,indent
 
-"与windows共享剪贴板
-set clipboard+=unnamed
+" 鼠标暂不启用, 键盘党....
+set mouse-=a
+" 启用鼠标
+" set mouse=a
+" Hide the mouse cursor while typing
+" set mousehide
+
+
+" 修复ctrl+m 多光标操作选择的bug，但是改变了ctrl+v进行字符选中时将包含光标下的字符
+set selection=inclusive
+set selectmode=mouse,key
 
 " change the terminal's title
 set title
+" 去掉输入错误的提示声音
+set novisualbell
+set noerrorbells
+set t_vb=
+set tm=500
 
 " Remember info about open buffers on close
 set viminfo^=%
+
+" For regular expressions turn magic on
+set magic
+
+" Configure backspace so it acts as it should act
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
 
 "==========================================
 " Display Settings 展示/排版等界面格式设置
