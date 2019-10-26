@@ -18,7 +18,13 @@ elseif filereadable(expand("~/.config/nvim/vimrc.bundles")) " neovim
 endif
 
 if has("cscope")
-    set csprg=/usr/local/bin/cscope
+    if !empty(glob("/usr/bin/cscope"))
+        set csprg=/usr/bin/cscope
+    endif
+
+    if !empty(glob("/usr/local/bin/cscope"))
+        set csprg=/usr/local/bin/cscope
+    endif
     set csto=0
     set cst
     set nocsverb
