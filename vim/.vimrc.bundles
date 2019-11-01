@@ -12,6 +12,28 @@
 set nocompatible
 filetype off " required! turn off
 
+if has("cscope")
+    if !empty(glob("/usr/bin/cscope"))
+        set csprg=/usr/bin/cscope
+    endif
+
+    if !empty(glob("/usr/local/bin/cscope"))
+        set csprg=/usr/local/bin/cscope
+    endif
+    set csto=0
+    set cst
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    "else add database pointed to by environment
+        elseif $CSCOPE_DB != ""
+            cs add $CSCOPE_DB
+    endif
+    set csverb
+    set cscopetag
+    "set cscopequickfix=s-,g-,d-,t-,e-,i-,f-
+endif
+
 " ################### 插件管理 ###################
 
 " inspired by spf13, 自定义需要的插件集合
@@ -97,7 +119,7 @@ Plug 'tomasr/molokai'
 " nerdtree nerdtreetabs
 Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
 " ctrlspace
-" Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'vim-ctrlspace/vim-ctrlspace'
 " tagbar
 Plug 'majutsushi/tagbar'
 
@@ -140,126 +162,16 @@ call plug#end()
 
 " ################### 基础 ######################
 
-" syntastic {{{
-if has_key(g:plugs, 'syntastic')
-    " dependence
-    " 1. shellcheck `brew install shellcheck` https://github.com/koalaman/shellcheck
-
-    let g:syntastic_error_symbol='>>'
-    let g:syntastic_warning_symbol='>'
-    let g:syntastic_check_on_open=1
-    let g:syntastic_check_on_wq=0
-    let g:syntastic_enable_highlighting=1
-
-    " checkers
-    " python
-    " pip install flake8
-    let g:syntastic_python_checkers=['flake8', ] " 使用pyflakes,速度比pylint快
-    let g:syntastic_python_flake8_options='--ignore=E501,E225,E124,E712,E116,E131'
-
-    " javascript
-    " let g:syntastic_javascript_checkers = ['jsl', 'jshint']
-    " let g:syntastic_html_checkers=['tidy', 'jshint']
-    " npm install -g eslint eslint-plugin-standard eslint-plugin-promise eslint-config-standard
-    " npm install -g eslint-plugin-import eslint-plugin-node eslint-plugin-html babel-eslint
-    let g:syntastic_javascript_checkers = ['eslint']
-
-    " to see error location list
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_enable_signs = 1
-    let g:syntastic_auto_loc_list = 0
-    let g:syntastic_auto_jump = 0
-    let g:syntastic_loc_list_height = 5
-
-    function! ToggleErrors()
-        let old_last_winnr = winnr('$')
-        lclose
-        if old_last_winnr == winnr('$')
-            " Nothing was closed, open syntastic_error location panel
-            Errors
-        endif
-    endfunction
-    nnoremap <Leader>s :call ToggleErrors()<cr>
-
-    " ,en ,ep to jump between errors
-    function! <SID>LocationPrevious()
-    try
-        lprev
-    catch /^Vim\%((\a\+)\)\=:E553/
-        llast
-    endtry
-    endfunction
-
-    function! <SID>LocationNext()
-    try
-        lnext
-    catch /^Vim\%((\a\+)\)\=:E553/
-        lfirst
-    endtry
-    endfunction
-
-    nnoremap <silent> <Plug>LocationPrevious    :<C-u>exe 'call <SID>LocationPrevious()'<CR>
-    nnoremap <silent> <Plug>LocationNext        :<C-u>exe 'call <SID>LocationNext()'<CR>
-    nmap <silent> <Leader>ep    <Plug>LocationPrevious
-    nmap <silent> <Leader>en    <Plug>LocationNext
-
-    " 修改高亮的背景色, 适应主题
-    highlight SyntasticErrorSign guifg=white guibg=black
-
-    " 禁止插件检查java
-    " thanks to @marsqing, see https://github.com/wklken/k-vim/issues/164
-    let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['java'] }
-
-    " 关闭syntastic语法检查, 鼠标复制代码时用到, 防止把错误标志给复制了
-    nnoremap <silent> <Leader>ec :SyntasticToggleMode<CR>
-endif
-" }}}
-
-
-" ale {{{
-if has_key(g:plugs, 'ale')
-    " pip install flake8
-    " npm install -g eslint eslint-plugin-standard eslint-plugin-promise eslint-config-standard
-    " npm install -g eslint-plugin-import eslint-plugin-node eslint-plugin-html babel-eslint
-    let g:ale_linters = {
-    \   'python': ['flake8'],
-    \   'javascript': ['eslint'],
-    \}
-
-    " E501 -> 120 chars
-    let g:ale_python_flake8_args="--ignore=E114,E116,E131 --max-line-length=120"
-    " --ignore=E225,E124,E712,E116
-
-    let g:ale_sign_error = '>>'
-    let g:ale_sign_warning = '>'
-
-    let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
-    let g:ale_echo_msg_error_str = 'E'
-    let g:ale_echo_msg_warning_str = 'W'
-    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-
-    nmap <silent> <Leader>ep <Plug>(ale_previous_wrap)
-    nmap <silent> <Leader>en <Plug>(ale_next_wrap)
-
-    nnoremap <silent> <Leader>ec :ALEToggle<CR>
-
-    " troggle quickfix list
-    function! ToggleErrors()
-        let old_last_winnr = winnr('$')
-        lclose
-        if old_last_winnr == winnr('$')
-            " Nothing was closed, open syntastic_error location panel
-            lopen
-        endif
-    endfunction
-    nnoremap <Leader>s :call ToggleErrors()<cr>
-
-    let g:ale_set_highlights = 1
-    highlight clear ALEErrorSign
-    highlight clear ALEWarningSign
-endif
-
-" }}}
+" cscope{{{
+    nmap <leader>ss :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>sg :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>sc :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>st :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>se :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>sf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <leader>si :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <leader>sd :cs find d <C-R>=expand("<cword>")<CR><CR>
+"}}}
 
 " ################### 自动补全 ###################
 
@@ -358,19 +270,19 @@ endif
     let g:ctrlp_mruf_max=500
     let g:ctrlp_follow_symlinks=1
     " 如果安装了ag, 使用ag
-    " if executable('ag')
-    " " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-    " let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-    " " ag is fast enough that CtrlP doesn't need to cache
-    " let g:ctrlp_use_caching = 0
-    " endif
+    if executable('ag')
+        " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+        let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+        " ag is fast enough that CtrlP doesn't need to cache
+        let g:ctrlp_use_caching = 0
+    endif
 " }}}
 
 
 " ctrlsf {{{
     nmap \ <Plug>CtrlSFCwordPath<CR>
     " let g:ctrlsf_position = 'below'
-    " let g:ctrlsf_winsize = '30%'
+    let g:ctrlsf_winsize = '40%'
     let g:ctrlsf_auto_close = 0
     let g:ctrlsf_confirm_save = 0
     " Note: cannot use <CR> or <C-m> for open
@@ -386,6 +298,10 @@ endif
         \ "prev"  : "<C-K>",
         \ "pquit" : "q",
         \ }
+    let g:ctrlsf_auto_focus = {
+        \ "at": "done",
+        \ "duration_less_than": 1000
+    \ }
 " }}}
 
 " git.  git操作还是习惯命令行,vim里面处理简单diff编辑操作
@@ -498,6 +414,21 @@ endif
     let g:nerdtree_tabs_open_on_gui_startup=0
 " }}}
 
+" Vim Workspace Controller
+" ctrlspace {{{
+    if executable("ag")
+        let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
+    endif
+    let g:airline_exclude_preview = 1
+    let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
+    let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
+    let g:CtrlSpaceSaveWorkspaceOnExit = 1
+    
+    hi CtrlSpaceSelected guifg=#586e75 guibg=#eee8d5 guisp=#839496 gui=reverse,bold ctermfg=10 ctermbg=7 cterm=reverse,bold
+    hi CtrlSpaceNormal   guifg=#839496 guibg=#021B25 guisp=#839496 gui=NONE ctermfg=12 ctermbg=0 cterm=NONE
+    hi CtrlSpaceSearch   guifg=#cb4b16 guibg=NONE gui=bold ctermfg=9 ctermbg=NONE term=bold cterm=bold
+    hi CtrlSpaceStatus   guifg=#839496 guibg=#002b36 gui=reverse term=reverse cterm=reverse ctermfg=12 ctermbg=8
+" }}}
 
 " 标签导航
 " tagbar {{{

@@ -40,20 +40,6 @@ if has("cscope")
     set cscopequickfix=s-,g-,d-,t-,e-,i-,f-
 endif
 
-" taglist插件配置
-" let Tlist_Ctags_Cmd = '/usr/bin/ctags'
-" let Tlist_Show_One_File = 1 " 不同时显示多个文件的tag，只显示当前文件的
-" let Tlist_Exit_OnlyWindow = 1 " 如果taglist窗口是最后一个窗口，则退出vim
-" let Tlist_File_Fold_Auto_Close=1 " 自动折叠当前非编辑文件的方法列表
-" let Tlist_Auto_Open = 0
-" let Tlist_Auto_Update = 1
-" let Tlist_Hightlight_Tag_On_BufEnter = 1
-" let Tlist_Enable_Fold_Column = 0
-" let Tlist_Process_File_Always = 1
-" let Tlist_Display_Prototype = 0
-" let Tlist_Compact_Format = 1
-" nnoremap <silent><F4> :TlistToggle<CR>
-
 "==========================================
 " General Settings 基础设置
 "==========================================
@@ -496,15 +482,6 @@ nnoremap U <C-r>
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>ez :vsp ~/.zshrc<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
-" cscope
-nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 "==========================================
 " Theme Settings  主题设置
