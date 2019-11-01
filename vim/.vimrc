@@ -17,29 +17,6 @@ elseif filereadable(expand("~/.config/nvim/vimrc.bundles")) " neovim
   source ~/.config/nvim/vimrc.bundles
 endif
 
-if has("cscope")
-    if !empty(glob("/usr/bin/cscope"))
-        set csprg=/usr/bin/cscope
-    endif
-
-    if !empty(glob("/usr/local/bin/cscope"))
-        set csprg=/usr/local/bin/cscope
-    endif
-    set csto=0
-    set cst
-    set nocsverb
-    " add any database in current directory
-    if filereadable("cscope.out")
-        cs add cscope.out
-    "else add database pointed to by environment
-        elseif $CSCOPE_DB != ""
-            cs add $CSCOPE_DB
-    endif
-    set csverb
-    set cscopetag
-    set cscopequickfix=s-,g-,d-,t-,e-,i-,f-
-endif
-
 "==========================================
 " General Settings 基础设置
 "==========================================
