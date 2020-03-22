@@ -1,0 +1,35 @@
+flags = [
+    '-x',
+    'c',
+    '-DDPDK_NETDEV',
+    '-I.',
+    '-Wall',
+    '-Warray-bounds-pointer-arithmetic',
+    '-Wbad-function-cast',
+    '-Wcast-align',
+    '-Wextra',
+    '-Wformat',
+    '-Wformat-security',
+    '-Wlogical-not-parentheses',
+    '-Wmissing-field-initializers',
+    '-Wmissing-prototypes',
+    '-Wno-sign-compare',
+    '-Wno-unused',
+    '-Wno-unused-parameter',
+    '-Wold-style-definition',
+    '-Wpointer-arith',
+    '-Wshadow',
+    '-Wsizeof-array-argument',
+    '-Wstrict-prototypes',
+    '-Wswitch-enum',
+    '-Wthread-safety',
+    '-Wunused-parameter',
+    '-I', './include',
+    '-I', './lib',
+    '-I', '~/dpdk-next-net/x86_64-native-linuxapp-gcc/include',
+]
+
+def Settings( **kwargs ):
+  return {
+    'flags': flags,
+  }
