@@ -608,3 +608,7 @@ endif
 
 " 大括号自动补全并换行
 :inoremap {<CR> {<CR>}<ESC>O
+
+" insert模式创建并跳转到新行
+:inoremap <C-o> <esc>o
+
