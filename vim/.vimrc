@@ -193,6 +193,15 @@ function! NumberToggle()
 endfunc
 nnoremap <C-n> :call NumberToggle()<cr>
 
+" 每行80个字符提示
+" https://stackoverflow.com/questions/235439/vim-80-column-layout-concerns
+if exists('+colorcolumn')
+  set colorcolumn=80
+else
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
+
+
 "==========================================
 " FileEncode Settings 文件编码,格式
 "==========================================
