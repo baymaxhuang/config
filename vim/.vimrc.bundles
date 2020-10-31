@@ -214,6 +214,8 @@ call plug#end()
         \ 'tagbar' : 1,
         \ 'gitcommit' : 1,
         \}
+
+    let g:ycm_clangd_binary_path = "/data0/hhb/clangd_10.0.0/bin/clangd"
 " }}}
 
 " ################### 快速编码 ###################
