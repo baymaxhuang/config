@@ -98,5 +98,9 @@ sudo make install
 let g:ycm_clangd_binary_path = "/path/to/clangd"
 ```
 
+### 问题五
+使用vim-ctrlspace插件，无法在启动vim时载入上次关闭的workspace标签
+
+该问题在[issues#274](https://github.com/vim-ctrlspace/vim-ctrlspace/issues/274)有记录，应该是新版本的vim-ctrlspace插件有bug，使用8e7ae5437196a3f6ef0ccdc4a88317e00d29f6f5版本的的vim-ctrlspace就没有问题
 
 
