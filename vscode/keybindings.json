@@ -1,0 +1,15 @@
+// 将键绑定放在此文件中以覆盖默认值
+[
+    {
+        "key": "cmd+f cmd+o",
+        "command": "outline.focus"
+    },
+    {
+        "key": "cmd+f cmd+e",
+        "command": "workbench.action.focusActiveEditorGroup"
+    },
+    // {
+    //     "key": "cmd+f cmd+e",
+    //     "command": "workbench.explorer.fileView.focus"
+    // }
+]

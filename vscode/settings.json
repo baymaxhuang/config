@@ -1,0 +1,345 @@
+{
+    // - references: https://github.com/wklken/k-vim-vscode
+    // ## window
+    // 窗口放大0.5 (explorer font-size无法自定义, 太小了)
+    "window.zoomLevel": 0.5,
+
+    // ## Editor
+    "editor.lineNumbers": "relative",
+    "editor.fontSize": 14,
+    "editor.fontFamily": "‘Fira Code’,Menlo, Monaco, 'Courier New', monospace",
+    // 开启花括号颜色
+    "editor.bracketPairColorization.enabled": true,
+    // 禁止编辑区滚动到最后一行下面 prevent the editor from scrolling beyond the last line.
+    "editor.scrollBeyondLastLine": false,
+    // 查找框展示导致鼠标能往上滚动一行
+    "editor.find.addExtraSpaceOnTop": false,
+    // 显示 120 字符竖线 the 120 characters line
+    "editor.rulers": [120],
+    // 关闭小地图 disable the minimap
+    "editor.minimap.enabled": false,
+    // 设置注释的颜色 以及斜体展示 set comment italic
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                // comments color, like jetbrains
+                "scope": [
+                    "comment",
+                    "comment.line",
+                    "comment.block",
+                    "comment.block.documentation",
+                    "string.quoted.docstring.multi.python",
+                    "punctuation.definition.comment",
+                    "punctuation.definition.comment.begin.documentation",
+                    "punctuation.definition.comment.end.documentation",
+                ],
+                "settings": {
+                    "fontStyle": "italic",
+                    "foreground": "#808080",
+                }
+            },
+        ]
+    },
+    // 提示相关 suggestion
+    // "editor.suggestSelection": "recentlyUsedByPrefix",
+    "editor.suggestSelection": "first",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": true,
+      "strings": true,
+    },
+    // "editor.acceptSuggestionOnEnter": "smart", // "on", "off", "smart"
+    // Enable parameter hints => 默认开启的, 觉得信息过多的话, 关闭
+    "editor.parameterHints.enabled": false,
+    "editor.inlineSuggest.enabled": true,
+
+
+    // ## workbench
+    "workbench.colorTheme": "Darcula",
+    "workbench.iconTheme": "vscode-great-icons",
+    // 编辑区域配色
+    "workbench.colorCustomizations": {
+        "editor.background": "#2b2b2b",
+        // "editorGutter.background": "#313335",
+        // "activityBar.background": "#4d5254",
+        // "sideBarSectionHeader.background": "#4d5254",
+        // "sideBar.background": "#3b3f41",
+        // "statusBar.background": "#00605f",
+        "tab.activeBackground": "#3c5da9",
+
+        // "terminal.foreground": "#678046",
+        // "terminal.ansiBrightBlue": "#2F7ECD",
+        // "terminal.ansiBrightGreen": "#d37e02",
+        // "terminal.background": "#242424",
+    },
+
+    // ## Terminal
+    "terminal.integrated.fontSize": 12,
+    "terminal.integrated.scrollback": 20000,
+    // 终端选中即拷贝
+    "terminal.integrated.copyOnSelection": true,
+    "terminal.external.osxExec": "iTerm.app",
+
+    "files.autoSave": "onWindowChange",
+    "files.trimTrailingWhitespace": true,
+
+    // ## search
+    // 显示检索到的位置的行号
+    "search.showLineNumbers": true,
+    // 是否智能大小写
+    "search.smartCase": true,
+
+    // ## Extension: vim
+    "vim.leader": ",",
+    "vim.incsearch": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.highlightedyank.enable": true,
+    "vim.autoindent": true,
+
+    // - references: https://code.visualstudio.com/docs/getstarted/keybindings#_default-keybindings
+    // shortcut: kj
+    // 退出编辑模式
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["k", "j"],
+            "after": ["<Esc>"]
+        }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        // shortcut: leader-q
+        // quit 关闭文件
+        {
+            "before": ["leader", "q"],
+            "commands": [
+                {
+                    "command": "workbench.action.files.save",
+                    "args": []
+                },
+                {
+                   "command": "workbench.action.closeActiveEditor",
+                    "args": []
+                }
+            ]
+        },
+        // shortcut: leader-w
+        // save 保存文件
+        {
+            "before": ["leader", "w"],
+            "commands": [
+                {
+                    "command": "workbench.action.files.save",
+                    "args": []
+                }
+            ]
+        },
+        // shortcut: leader-gd
+        // goToDefinition 跳转到定义处
+        {
+            "before": ["leader", "g", "d"],
+            "after": ["g", "d"]
+        },
+        // shortcut: leader-jd
+        // goToDefinition 跳转到定义处
+        {
+            "before": ["leader", "j", "d"],
+            "after": ["g", "d"]
+        },
+        // shortcut: leader-gi
+        // goToImplementation 跳转到实现处
+        {
+            "before": ["leader", "g", "i"],
+            "commands": [
+                {
+                    "command": "editor.action.goToImplementation",
+                }
+            ]
+        },
+        // shortcut: leader-gh
+        // show help-tip-def 展示提示
+        {
+            "before": ["leader", "g", "h"],
+            "after": ["g", "h"]
+        },
+        // shortcut: leader-h
+        // show help-tip-def 展示提示
+        {
+            "before": ["leader", "h"],
+            "after": ["g", "h"]
+        },
+        // shortcut: leader-d
+        // show dash 当前关键字查询dash
+        {
+            "before": ["leader", "d"],
+            "commands": ["extension.dash.specific"]
+        },
+        // shortcut: leader-cc
+        // comment 注释
+        {
+            "before": ["leader", "c", "c"],
+            "commands": ["editor.action.addCommentLine"]
+        },
+        // shortcut: leader-cu
+        // uncomment 解开注释
+        {
+            "before": ["leader", "c", "u"],
+            "commands": ["editor.action.removeCommentLine"]
+        },
+        // shortcut: leader-rn
+        // rename symbol 重命名
+        {
+            "before": ["leader", "r", "n"],
+            "commands": ["editor.action.rename"]
+        },
+        // shortcut: leader-space
+        // trailing space
+        {
+            "before": ["leader", "space"],
+            "commands": ["editor.action.trimTrailingWhitespace"]
+        },
+        // shortcut: # and *
+        // - switch # and *
+        {
+            "before": ["*"],
+            "after": ["#"]
+        },
+        {
+            "before": ["#"],
+            "after": ["*"]
+        },
+        // shortcut: ;
+        // show the command palette 展示command palette
+        {
+            "before": [";"],
+            "commands": [
+                "workbench.action.showCommands",
+            ]
+        },
+        // shortcut: leader-p
+        // show the command palette 展示command palette
+        {
+            "before": ["leader", "p"],
+            "commands": [
+                "workbench.action.showCommands",
+            ]
+        },
+        // shortcut: leader-z
+        // trigger editor size 当前编辑区域宽度变大变小
+        {
+            "before": ["leader", "z"],
+            "commands": [
+                "workbench.action.toggleEditorWidths",
+            ]
+        },
+
+        // - leader-p to all opened editors
+        // {
+        //     "before": ["leader", "p"],
+        //     "commands": [
+        //         "workbench.action.openNextRecentlyUsedEditorInGroup"
+        //     ]
+        // },
+
+        // shortcut: leader-f
+        // go to file 跳转到文件
+        {
+            "before": ["leader", "f"],
+            "commands": [
+                "workbench.action.quickOpen",
+            ]
+        },
+        // shortcut: @
+        // go to symbol 跳转到当前文件的symbol位置(变量/函数/类等特征位置), k-vim中 leader-fu
+        {
+            // "before": ["leader", "s"],
+            "before": ["@"],
+            "commands": [
+                "workbench.action.gotoSymbol",
+            ]
+        },
+        // shortcut: leader-s
+        // show problems 展示当前编辑文件的问题
+        {
+            "before": ["leader", "s"],
+            "commands": [
+                "workbench.actions.view.problems"
+            ]
+        },
+        // shortcut: leader-en
+        // Go to Next Error or Warning 下一个错误点
+        {
+            "before": ["leader", "e", "n"],
+            "commands": [
+                "editor.action.marker.nextInFiles"
+            ]
+        },
+        // shortcut: leader-ep
+        // Go to Previous Error or Warning 前一个错误点
+        {
+            "before": ["leader", "e", "p"],
+            "commands": [
+                "editor.action.marker.prevInFiles"
+            ]
+        },
+        // shortcut: leader-/
+        // turn-off highlight 关闭vim search高亮选中
+        {
+            "before":["leader", "/"],
+            "commands": [
+                ":nohl",
+            ]
+        },
+        {
+            "before": ["L"],
+            "after": ["$"]
+        },
+        {
+            "before": ["H"],
+            "after": ["^"]
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        // shortcut: leader-cc
+        // add comment 加注释
+        {
+            "before": ["<leader>", "c", "c"],
+            "commands": ["editor.action.addCommentLine"]
+        },
+        // shortcut: leader-cu
+        // uncomment 解开注释
+        {
+            "before": ["<leader>", "c", "u"],
+            "commands": ["editor.action.removeCommentLine"]
+        },
+        // shortcut: > / <
+        // indent/outdent lines (repeatable) 左右移动代码块
+        {
+            "before": [
+                ">"
+            ],
+            "commands": [
+                "editor.action.indentLines"
+            ]
+        },
+        {
+            "before": [
+                "<"
+            ],
+            "commands": [
+                "editor.action.outdentLines"
+            ]
+        },
+    ],
+    // - auto switch input. detail https://github.com/VSCodeVim/Vim#input-method
+    "vim.autoSwitchInputMethod.enable": true,
+    "vim.autoSwitchInputMethod.defaultIM": "com.apple.keylayout.ABC",
+    "vim.autoSwitchInputMethod.obtainIMCmd": "/opt/homebrew/bin/im-select",
+    "vim.autoSwitchInputMethod.switchIMCmd": "/opt/homebrew/bin/im-select {im}",
+    // - easymotion. detail https://github.com/VSCodeVim/Vim#vim-easymotion
+    "vim.easymotion": true,
+    "gitlens.advanced.messages": {
+        "suppressGitVersionWarning": true
+    },
+    "git.ignoreLegacyWarning": true,
+    "workbench.editor.highlightModifiedTabs": true,
+}
