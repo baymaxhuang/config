@@ -96,6 +96,7 @@
     "vim.hlsearch": true,
     "vim.highlightedyank.enable": true,
     "vim.autoindent": true,
+    "vim.mouseSelectionGoesIntoVisualMode": false,
 
     // - references: https://code.visualstudio.com/docs/getstarted/keybindings#_default-keybindings
     // shortcut: kj
