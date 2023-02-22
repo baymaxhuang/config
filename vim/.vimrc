@@ -371,8 +371,8 @@ noremap <right> :bn<CR>
 map <leader>th :tabfirst<cr>
 map <leader>tl :tablast<cr>
 
-map <leader>tj :tabnext<cr>
-map <leader>tk :tabprev<cr>
+map <leader>tk :tabnext<cr>
+map <leader>tj :tabprev<cr>
 map <leader>tn :tabnext<cr>
 map <leader>tp :tabprev<cr>
 
