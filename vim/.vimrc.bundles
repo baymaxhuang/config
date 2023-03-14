@@ -17,8 +17,8 @@ if has("cscope")
         set csprg=/usr/bin/cscope
     endif
 
-    if !empty(glob("/usr/local/bin/cscope"))
-        set csprg=/usr/local/bin/cscope
+    if !empty(glob("/opt/homebrew/bin/cscope"))
+        set csprg=/opt/homebrew/bin/cscope
     endif
     set csto=0
     set cst
@@ -39,7 +39,7 @@ endif
 " inspired by spf13, 自定义需要的插件集合
 if !exists('g:bundle_groups')
     " let g:bundle_groups=['python', 'javascript', 'golang', 'php', 'ruby', 'shell', 'markdown', 'html', 'css', 'less', 'coffeescript', 'tmux', 'json', 'beta']
-    let g:bundle_groups=['golang', 'markdown']
+    let g:bundle_groups=['golang', 'markdown', 'tmux']
 endif
 " ----------------------------------------------------------------------------
 " 使用 vim-plug 管理插件
@@ -122,6 +122,12 @@ Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 " tagbar
 Plug 'majutsushi/tagbar'
+
+if count(g:bundle_groups, 'tmux')
+    " tmux
+    " For tmux navigator Ctrl-hjkl
+    Plug 'christoomey/vim-tmux-navigator'
+endif
 
 if count(g:bundle_groups, 'markdown')
     Plug 'plasticboy/vim-markdown', {'for': 'md'}
