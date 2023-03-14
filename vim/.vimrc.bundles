@@ -80,7 +80,7 @@ Plug 'junegunn/vim-easy-align'
 " ctrlp ctrlpfunky
 Plug 'ctrlpvim/ctrlp.vim'
 " ctrlsf
-" 类似sublimetext的搜索
+" 类似sublimetext的搜索，依赖ag
 " In CtrlSF window:
 " 回车/o, 打开
 " t       在tab中打开(建议)
