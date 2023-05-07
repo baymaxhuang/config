@@ -168,6 +168,7 @@ set smarttab
 set expandtab
 " 缩进时，取整 use multiple of shiftwidth when indenting with '<' and '>'
 set shiftround
+nnoremap <leader>et :set expandtab! expandtab?<CR>
 
 " A buffer becomes hidden when it is abandoned
 set hidden
